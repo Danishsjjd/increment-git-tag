@@ -1,0 +1,18 @@
+on:
+  - push
+
+permissions:
+  contents: write
+
+jobs:
+  bump-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: ./
+        id: increment-git-tag
+        with:
+          version-type: major
+      - name: Get new version
+        run: echo New version is ${{ steps.increment-git-tag.outputs.new-version }}
